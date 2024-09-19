@@ -30,5 +30,5 @@ exports.customerMiddleWare = async(req, res, next)=>{
 
 exports.paymentApi = async(req, res, next)=>{
    console.log(req.user_id)
-   //next()
+//    next()
 }
