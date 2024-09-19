@@ -10,18 +10,16 @@ exports.AddCart = async (req, res, next) => {
             userId: req.user_id,
             productId: req.body.productId,
         }
-        const findQuery = await cartModel.findOne({productId:CartDetails.productId})
-        if(findQuery){
-            res.json({
+        const existItem = await cartModel.findOne({userId:CartDetails.userId,productId:CartDetails.productId})
+        if(existItem){
+             res.json({
                 status:"failed",
-                message:"product already in your cart"
-            })
-
-            
+                message:"prduct already inside"
+             })
         }else{
             const resData = await cartModel.create(CartDetails)
             if (resData) {
-                res.json({
+                res.json({ 
                     status: 'success',
                     message: "Product added"
                 })
@@ -32,7 +30,7 @@ exports.AddCart = async (req, res, next) => {
                 })
             }
         }
-      
+       
     } catch (err) {
         res.json({
             status: "failed to add",
@@ -88,25 +86,24 @@ exports.CartsAggregate = async function (req, res, next) {
 
 exports.IncreaseQunatity = async function (req, res, next) {
     try {
+        const userid =req.user_id
+        // console.log('userId',userid)
         const productid = req.params.id
         const updateData = { $inc: { quantity: 1 } }
-
         //find product by productId
-        const check = await cartModel.findOne({ productId: productid })
-
+        const check = await cartModel.findOne({$and:[{userId:userid},{productId:productid}]})
         if (check) {
             //increase 1 in quantity if product exist
-            const resData = await cartModel.updateOne({ productId: productid }, updateData)
+            const resData = await cartModel.updateOne({ _id:check._id}, updateData)
             if (resData) {
                 res.json({
                     status: "success",
-                    message: `One item added`
+                    message: `One item added`,
                 })
             } else {
                 res.json({
                     status: "failed",
-                    message: "unable to add item",
-                    c: resData
+                    message: "unable to add item"
                 })
             }
         } else {
@@ -130,11 +127,13 @@ exports.IncreaseQunatity = async function (req, res, next) {
 
 exports.DescreaseQunatity = async (req, res, next) => {
     try {
+        const userid=req.user_id
         const productid = req.params.id
+        console.log(productid)
         const updateData = { $inc: { quantity: -1 } }
-        const findCartData = await cartModel.findOne({ productId: productid })
+        const findCartData = await cartModel.findOne({$and:[{userId:userid},{productId:productid}]})
         if (findCartData) {
-            const resData = await cartModel.updateOne({ productId: productid }, updateData)
+            const resData = await cartModel.updateOne({ _id:findCartData._id}, updateData)
             if (resData) {
                 res.json({
                     status: "success",
@@ -167,8 +166,28 @@ exports.DescreaseQunatity = async (req, res, next) => {
 //delete cart api
 
 exports.DeleteCart = async function (req, res, next) {
-    console.log(req.params.id)
-    res.end("hello world")
+    const userid=req.user_id
+    const productid = req.params.id
+    const FindProduct = await cartModel.findOne({$and:[{userId:userid},{productId:productid}]})
+    if(FindProduct){
+        const deleteCart = await cartModel.deleteOne(FindProduct._id)
+        if(deleteCart){
+            res.json({
+                status:"success",
+                message:"delete successFully"
+            })
+        }else{
+            res.json({
+                status:"failed",
+                message:"unable to delete cart"
+            })
+        }
+    }else{
+        res.json({
+            status:"failed",
+            message:"something went wrong to delete"
+        })
+    }
 }
 
 //delete cart api end

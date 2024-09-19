@@ -109,9 +109,9 @@ exports.login = async (req, res, next) => {
 
 exports.verifyCustomer = async (req, res, next) => {
     try {
-        const query = { id: req.params.id }
+        const query = { _id: req.params.id }
         // console.log(query)
-        const updateData = await CustomerModel.updateOne(query._id, { customer_status: 1 });
+        const updateData = await CustomerModel.updateOne(query, { customer_status: 1 });
         if (updateData) {
             res.json({
                 name: "success",
