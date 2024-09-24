@@ -279,7 +279,7 @@ exports.productImageAggregate = async function (req, res, next) {
         })
     }
 }
-
+//console.log("hello world")
 //search product //
 
 exports.searchProduct = async function (req, res, next) {
