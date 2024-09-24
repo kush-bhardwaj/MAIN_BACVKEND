@@ -10,6 +10,7 @@ exports.AddCart = async (req, res, next) => {
             userId: req.user_id,
             productId: req.body.productId,
         }
+        console.log("details",CartDetails)
         const existItem = await cartModel.findOne({userId:CartDetails.userId,productId:CartDetails.productId})
         if(existItem){
              res.json({

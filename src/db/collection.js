@@ -8,6 +8,7 @@ const COLLECTION ={
     SubSubCategory:"subsubcategory",
     slider:"sliders",
     Notification:"notificationx",
-    cart:"cart"
+    cart:"cart",
+    order:'order'
 }
 module.exports =COLLECTION;

@@ -18,9 +18,9 @@ exports.signup = async (req, res, next) => {
         if (resData) {
             const sentHTML = `<html>
                     <body>
-                            <h1>${resData.custumerName}</h1>
+                            <h1 style="color:"red">${resData.custumerName}</h1>
                             <p>Welcome ${resData.custumerName}</p>
-                            <span>click on link to verify <a href='http://192.168.0.5:5000/api/auth/customer/verify/${resData._id}'>Verify here<a/></span>
+                            <span>click on link to verify <a href='http://192.168.43.223:5000/api/auth/customer/verify/${resData._id}'>Verify here<a/></span>
                     </body>
             </html>`
             VerifyAccount(resData.custumerEmail,"Signup Success" , " " , sentHTML)

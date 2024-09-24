@@ -12,6 +12,7 @@ const SliderRouter = require('./src/router/SliderRouter');
 const NotificationRouter = require('./src/router/NotificationRouter');
 const CustumerRouter = require('./src/router/CustomerRouter');
 const CartRouter = require('./src/router/CarRouter');
+const OrderRouter = require('./src/router/OrdersRouter');
 
 app.use(cors())
 app.use(express.json({ limit: '100mb' }))
@@ -44,11 +45,11 @@ app.use('/api/auth',AdminAccRouter);
 app.use('/api/auth/customer',CustumerRouter)
 app.use('/api/product',ProductRouter);
 app.use('/api/category',CategoryRouter);
+app.use('/api/order',OrderRouter)
 app.use('/api/subcategory',SubCatRouter);
 app.use('/api/subsubdcat',SubsubcatRouter);
 app.use('/api/cart',CartRouter)
 app.use('/api/slider',SliderRouter);
 app.use('/api/notification',NotificationRouter);
-// app.use()
 module.exports = app
 

@@ -46,28 +46,44 @@ exports.addProduct = async function (req, res, next) {
 //getAllProduct completed 👍
 exports.getAllProducts = async function (req, res, next) {
     try {
-        const pageNo = req.query.pageno
-        // console.log(pageNo)
-        const limit = 5;
-        var totalCount = await ProductModel.find().count();
-        const totalPage = Math.ceil(totalCount / limit)
+        // const pageNo = req.query.pageno
+        // // console.log(pageNo)
+        // const limit = 5;
+        // var totalCount = await ProductModel.find().count();
+        // const totalPage = Math.ceil(totalCount / limit)
 
-        if (pageNo <= totalPage) {
-            var offset = (pageNo - 1) * limit
-            const getProduct = await ProductModel.find({}).skip(offset).limit(limit)
-            if (getProduct) {
-                res.json({
-                    status: "success",
-                    message: "products find successfull",
-                    data: getProduct,
-                    pages: totalPage
-                })
-            } else {
-                res.json({
-                    status: "faild",
-                    message: "faild to fetch products"
-                })
-            }
+        // if (pageNo <= totalPage) {
+        //     var offset = (pageNo - 1) * limit
+        //     const getProduct = await ProductModel.find({}).skip(offset).limit(limit)
+        //     if (getProduct) {
+        //         res.json({
+        //             status: "success",
+        //             message: "products find successfull",
+        //             data: getProduct,
+        //             pages: totalPage
+        //         })
+        //     } else {
+        //         res.json({
+        //             status: "faild",
+        //             message: "faild to fetch products"
+        //         })
+        //     }
+        // }
+
+        const allProduct = await ProductModel.find({})
+      
+        if (allProduct) {
+            res.json({
+                status: "success",
+                message: "products find successfull",
+                data: allProduct,
+                // pages: totalPage
+            })
+        } else {
+            res.json({
+                status: "faild",
+                message: "faild to fetch products"
+            })
         }
 
     } catch (err) {
@@ -85,11 +101,11 @@ exports.getProductById = async (req, res, next) => {
     const query = { _id: req.params }
     const find = { $and: [{ productCat_Id: new ObjectId(query._id) }] }
     const findData = await ProductModel.find(find)
-    if(findData){
+    if (findData) {
         res.json({
-            status:"success",
-            message:"get all prducts by id",
-            data:findData
+            status: "success",
+            message: "get all prducts by id",
+            data: findData
         })
     }
 }
@@ -170,7 +186,7 @@ exports.updateProduct = async function (req, res, next) {
 
 exports.singleProduct = async function (req, res, next) {
     try {
-        const query = {productTitle : req.params.name };
+        const query = { productTitle: req.params.name };
         // console.log("single product id", query)
         const singleRes = await ProductModel.findOne(query)
         if (singleRes) {

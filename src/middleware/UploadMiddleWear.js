@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       const path = 'IMG' + uniqueSuffix+"."+file.originalname.split(".")[1]
       req.imagePath = path;
-      arr.push(req.imagePath)
+      // arr.push(req.imagePath)
       cb(null, path)
       req.arr=arr;
     }
