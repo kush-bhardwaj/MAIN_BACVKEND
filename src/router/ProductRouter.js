@@ -4,7 +4,7 @@ const upload = require('../middleware/UploadMiddleWear')
 const { AuthMiddleWare } = require('../middleware/AuthMiddleware')
 const ProductRouter =express.Router()
 // ProductRouter.use(AuthMiddleWare)
-ProductRouter.get('/searchProduct', searchProduct)
+ProductRouter.get('/searchProduct', searchProduct) // search done
 ProductRouter.get('/getproductbyid/:id',getProductById)
 ProductRouter.post('/addProduct',upload.single('productImg'),addProduct)//complete
 ProductRouter.get('/allProduct',getAllProducts) //complete

@@ -97,9 +97,11 @@ exports.IncreaseQunatity = async function (req, res, next) {
             //increase 1 in quantity if product exist
             const resData = await cartModel.updateOne({ _id:check._id}, updateData)
             if (resData) {
+                // const get = await 
                 res.json({
                     status: "success",
                     message: `One item added`,
+                    data:check
                 })
             } else {
                 res.json({
